@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>20180716总结 | NJUICS-JSBCHINA</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-121783408-2','auto');ga('send','pageview');
+</script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">20180716总结</h1><a id="logo" href="/.">NJUICS-JSBCHINA</a><p class="description">合作项目工作日志</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">20180716总结</h1><div class="post-meta">Jul 16, 2018</div><div class="post-content"><h1 id="数据处理初步结果"><a href="#数据处理初步结果" class="headerlink" title="数据处理初步结果"></a>数据处理初步结果</h1><h2 id="数据分析之样本选取"><a href="#数据分析之样本选取" class="headerlink" title="数据分析之样本选取"></a>数据分析之样本选取</h2><p>通过和江苏银行的充分沟通，结合任务目标，我们选择以用户为单位构造样本。其中，样本将被划分为训练集和测试集。<br>在训练集中，样本主要来源于以下几类用户的相关数据：</p>
+<ol>
+<li>美团客户+美团交易数据+申请过借呗/申请过车e融(正样本)</li>
+<li>江苏银行直销客户+美团交易数据+申请过借呗/申请过车e融(正样本)</li>
+<li>江苏银行直销客户+美团交易数据+短信推广过车e融且办理(正样本)</li>
+<li>江苏银行直销客户+美团交易数据+短信推广过车e融但未办理(负样本)</li>
+</ol>
+<p>在测试集中，样本主要来源于以下二类用户的相关数据：</p>
+<ol>
+<li>江苏银行直销客户+美团交易数据+短信推广过车e融且办理(正样本)</li>
+<li>江苏银行直销客户+美团交易数据+短信推广过车e融但未办理(负样本)</li>
+</ol>
+<h2 id="数据统计概要描述"><a href="#数据统计概要描述" class="headerlink" title="数据统计概要描述"></a>数据统计概要描述</h2><p>根据上述样本数据来源描述，在模型训练前，需对用户数据，尤其是美团交易数据进行预处理。因美团数据以‘交易’为单位，因此需从单个用户的所有交易中提取出属于该用户的特征。</p>
+<p>通过分析，我们得到了初步的数据处理结果，如下所示：</p>
+<ol>
+<li>属于正样本用户的全部订单数量：1,320,442，其中，订单商户信息字段为空的数量为：580,371，商户信息字段为中文的有：736,506。</li>
+</ol>
+<p>根据商户的中文信息，我们对中文信息采取人工分类的方法进行处理。</p>
+<p>其中，可进行二级分类的交易统计结果如下：</p>
+<ol>
+<li>美食：6,525</li>
+<li>传媒: 59</li>
+<li>酒店住宿：584</li>
+<li>旅游：5,359</li>
+<li>休闲娱乐：208</li>
+<li>生活服务：540</li>
+<li>时尚购物：7,269</li>
+<li>丽人：490</li>
+<li>运动健身：72</li>
+<li>母婴亲子：68</li>
+<li>宠物：2</li>
+<li>汽车服务：552</li>
+<li>摄影写真：13</li>
+<li>学习培训：5</li>
+<li>家装：102</li>
+<li>结婚：2</li>
+<li>医疗：118</li>
+<li>公益：4</li>
+<li>信息科技：7,102</li>
+<li>经济理财：148</li>
+<li>公共出行：129,327</li>
+</ol>
+<p>不可再分的交易统计结果如下：</p>
+<ol>
+<li>点评：568,461</li>
+<li>爱奇艺：40</li>
+<li>百度糯米：2</li>
+<li>银联二维码：10</li>
+<li>去哪儿网：640</li>
+<li>云闪付(筛选过后仍无法分类的部分)：1,994</li>
+<li>宁波市民卡：3,177</li>
+<li>合肥城市通卡：932</li>
+<li>北京市政交通一卡通：460</li>
+<li>网易考拉海购：459</li>
+<li>网易严选：220</li>
+<li>飞牛网：181</li>
+<li>潍坊学院：111</li>
+<li>广州网易：106</li>
+<li>贝贝网：71</li>
+<li>华为应用：50</li>
+<li>时光网：42</li>
+<li>环球捕手：28</li>
+<li>苹果公司：22</li>
+<li>买单吧商户：14</li>
+<li>微博：7</li>
+<li>政府机关：25</li>
+<li>东浩国际：17</li>
+</ol>
+<p>在此，那些商户信息数据为数字串或NULL的交易并未在此统计。</p>
+<h1 id="后续计划"><a href="#后续计划" class="headerlink" title="后续计划"></a>后续计划</h1><h2 id="特征处理"><a href="#特征处理" class="headerlink" title="特征处理"></a>特征处理</h2><ol>
+<li>根据用户基本信息，提取用户基本特征，包括年龄，性别，身份证地区，手机号归属地。</li>
+<li>根据用户美团交易的商户分类数据，构造用户购买行为的偏好特征。</li>
+<li>根据用户美团交易的金额数据，按照不同时间区间维度构造用户购买力特征。</li>
+<li>尝试挖掘其他属于用户的特征</li>
+</ol>
+<h2 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h2><ol>
+<li>根据特征，构造训练和测试数据集，以稀疏矩阵形式表达。矩阵行表示用户，矩阵列表示对应的用户特征和label信息。</li>
+<li>结合特征，构造并在测试环境部署模型，进行参数训练。</li>
+</ol>
+<h1 id="工作时间点安排"><a href="#工作时间点安排" class="headerlink" title="工作时间点安排"></a>工作时间点安排</h1><ol>
+<li>2018.07.20前完成用户基本信息(身份证号，手机号)的特征处理工作</li>
+<li>2018.07.23-2018.07.25，完成每位用户不同周期的交易频次及金额统计</li>
+<li>2018.07.26-2018.07.27，完成模型实验环境配置</li>
+<li>2018.07.30-2018.08.07，完成实验环境的模型学习，部署，测试</li>
+<li>2018.08.08-2018.08.14, 完成生产环境的模型学习，部署</li>
+<li>2018.08.15后，在真实环境上在线运行、测试、对模型特征进行必要的调整</li>
+</ol>
+</div><div class="tags"></div><div class="post-nav"><a class="next" href="/2018/07/04/Data-preprocessing/">数据预处理</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://jsbchina.njuics.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/16/data-summary/">20180716总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/04/Data-preprocessing/">数据预处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/04/hello-world/">开篇</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.jsbchina.cn/" title="JSBCHINA" target="_blank">JSBCHINA</a><ul></ul><a href="http://moon.nju.edu.cn/" title="NJUICS" target="_blank">NJUICS</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">NJUICS-JSBCHINA.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>数据预处理 | NJUICS-JSBCHINA</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-121783408-2','auto');ga('send','pageview');
+</script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">数据预处理</h1><a id="logo" href="/.">NJUICS-JSBCHINA</a><p class="description">合作项目工作日志</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">数据预处理</h1><div class="post-meta">Jul 4, 2018</div><div class="post-content"><h1 id="数据预处理说明"><a href="#数据预处理说明" class="headerlink" title="数据预处理说明"></a>数据预处理说明</h1><h2 id="数据统计"><a href="#数据统计" class="headerlink" title="数据统计"></a>数据统计</h2><p>用户分成两类(A：申请过贷款，B：没申请过贷款)</p>
+<p>分别针对两类用户统计消费情况：</p>
+<ol>
+<li>日平均消费金额，</li>
+<li>周平均消费金额，</li>
+<li>月平均消费金额，</li>
+<li>用户分布情况(省/市)(按身份证/手机号归属地)</li>
+</ol>
+<p>商户这边，根据美团交易的那个字段对商户进行标记。有几种标记方法：</p>
+<ol>
+<li>按商户类别标记(公司经营范围区分)，</li>
+<li>是否存在连锁，通过一些字段判定一些稍微细粒度的类别(如快餐，中餐，西餐，快捷酒店，酒店，打车等，可结合美团自身的标签？)。</li>
+</ol>
+<p>此外，结合数据看能否再抽取一些特征。</p>
+<p>有了这些商户特征后，可再对用户进行一次统计。</p>
+<h2 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h2><p>要求输出csv格式，包括：</p>
+<ol>
+<li>用户信息：根据身份证区分出性别，年龄，省，市，手机归属地</li>
+<li>商户信息：商户类别，是否连锁，一些细粒度的标签</li>
+<li>用户消费信息：日平均金额，周平均金额，月平均金额，(按照商户分类情况再将金额细分到不同类别)</li>
+</ol>
+<p>提取完后，以如下格式保存为csv格式</p>
+<p>csv文件中每一行表示一个样本(用户)，格式如下：<br><code>y index0:value0 index1:value1 index2:value2  index3:value3  …indexN:valueN</code></p>
+<p>其中，<code>y</code>表示是否申请过贷款，其后跟上该用户的若干特征。数据以稀疏矩阵的形式表示。每个特征之间用空格间隔，每个特征有一个<code>index</code>和其对应的<code>value</code>。<code>index</code>总数表示特征空间的总量，其中离散型的特征按其类别数量参与统计，连续型特征就按一位统计。比如，如果先统计省份，中国13个省，那么<code>index0</code>到<code>index12</code>分别表示这13个省份；然后统计城市，城市假设有<code>M</code>个，那么从<code>index13</code>到<code>index(13+M-1)</code>的范围内表示这<code>M</code>个城市，以此类推。然后，申请过贷款的用户，不论通过与否，<code>y</code>都为<code>1</code>；再随机从剩余用户中抽取等量用户，作为负样本。</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2018/07/16/data-summary/">20180716总结</a><a class="next" href="/2018/07/04/hello-world/">开篇</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://jsbchina.njuics.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/16/data-summary/">20180716总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/04/Data-preprocessing/">数据预处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/04/hello-world/">开篇</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.jsbchina.cn/" title="JSBCHINA" target="_blank">JSBCHINA</a><ul></ul><a href="http://moon.nju.edu.cn/" title="NJUICS" target="_blank">NJUICS</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">NJUICS-JSBCHINA.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
